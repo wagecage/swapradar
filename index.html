@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwapRadar - Compare Crypto Swap Rates | Best No-KYC Exchange Rates</title>
+    <meta name="description" content="Compare crypto swap rates across top no-KYC exchanges. Find the best rates for BTC, ETH, USDT, XMR, SOL and more. Save up to 2% per swap with SwapRadar.">
+    <meta name="keywords" content="best crypto swap rates, compare crypto exchange rates, no KYC crypto swap, crypto swap comparison, changenow vs simpleswap, changelly rates, best exchange rate bitcoin, swap crypto without KYC">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wagecage.github.io/swapradar/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="SwapRadar - Compare Crypto Swap Rates Instantly">
+    <meta property="og:description" content="Find the best crypto swap rates across no-KYC exchanges. Compare ChangeNOW, SimpleSwap, Changelly & Exolix in real time.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wagecage.github.io/swapradar/">
+    <meta property="og:image" content="https://wagecage.github.io/swapradar/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SwapRadar - Compare Crypto Swap Rates">
+    <meta name="twitter:description" content="Stop overpaying on crypto swaps. Compare rates across 4 no-KYC exchanges instantly.">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "SwapRadar",
+        "description": "Compare crypto swap rates across no-KYC exchanges",
+        "url": "https://wagecage.github.io/swapradar/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+
+    <style>
+        /* ===== CSS Reset & Variables ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a2235;
+            --bg-card-hover: #1f2a40;
+            --bg-input: #0f1726;
+            --border: #2a3548;
+            --border-highlight: #3b82f6;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-blue-hover: #2563eb;
+            --accent-green: #10b981;
+            --accent-green-dim: rgba(16, 185, 129, 0.12);
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --gradient-green: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+            --shadow-glow: 0 0 20px rgba(59,130,246,0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        /* ===== Global Styles ===== */
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a { color: var(--accent-blue); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-blue-hover); }
+
+        /* ===== Utility ===== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .badge-green { background: var(--accent-green-dim); color: var(--accent-green); }
+        .badge-blue { background: rgba(59,130,246,0.12); color: var(--accent-blue); }
+        .badge-amber { background: rgba(245,158,11,0.12); color: var(--accent-amber); }
+
+        /* ===== Animated Background ===== */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(59,130,246,0.04) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(139,92,246,0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .header-nav { display: flex; gap: 28px; align-items: center; }
+        .header-nav a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .header-nav a:hover { color: var(--text-primary); }
+
+        .header-cta {
+            background: var(--gradient-blue);
+            color: #fff !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .header-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59,130,246,0.4);
+            color: #fff !important;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-family: var(--font-mono);
+        }
+
+        .hero-stat-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* ===== Swap Comparison Section ===== */
+        .swap-section { padding: 40px 0 80px; }
+
+        .swap-controls {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .pair-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .pair-btn {
+            padding: 10px 18px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .pair-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+            background: var(--bg-card-hover);
+        }
+
+        .pair-btn.active {
+            background: rgba(59,130,246,0.15);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .amount-input-wrap {
+            position: relative;
+            width: 200px;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 10px 16px;
+            padding-left: 36px;
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-family: var(--font-mono);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .amount-input:focus { border-color: var(--accent-blue); }
+
+        .amount-input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* ===== Search Box ===== */
+        .search-wrap {
+            position: relative;
+            max-width: 400px;
+            margin-bottom: 24px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .search-input::placeholder { color: var(--text-muted); }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* ===== Comparison Cards ===== */
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .comparison-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .comparison-header .pair-display {
+            font-family: var(--font-mono);
+            color: var(--accent-blue);
+        }
+
+        .comparison-header .last-updated {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .exchange-cards { display: flex; flex-direction: column; gap: 12px; }
+
+        .exchange-card {
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr 1fr auto;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exchange-card:hover {
+            border-color: rgba(59,130,246,0.3);
+            background: var(--bg-card-hover);
+            box-shadow: var(--shadow-md);
+        }
+
+        .exchange-card.best-rate {
+            border-color: var(--accent-green);
+            background: linear-gradient(135deg, rgba(16,185,129,0.06) 0%, var(--bg-card) 100%);
+        }
+
+        .exchange-card.best-rate::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-green);
+        }
+
+        .exchange-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .exchange-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .exchange-logo.changenow { background: linear-gradient(135deg, #00c26f 0%, #009e5a 100%); }
+        .exchange-logo.simpleswap { background: linear-gradient(135deg, #5c6ac4 0%, #4959bd 100%); }
+        .exchange-logo.changelly { background: linear-gradient(135deg, #44d7b6 0%, #32c5a4 100%); }
+        .exchange-logo.exolix { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); }
+
+        .exchange-name-wrap {}
+        .exchange-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .exchange-trust {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 2px;
+        }
+        .exchange-trust-stars { color: var(--accent-amber); font-size: 0.7rem; letter-spacing: 1px; }
+        .exchange-trust-count { color: var(--text-muted); font-size: 0.75rem; }
+
+        .card-data-col { text-align: center; }
+        .card-data-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+        .card-data-value {
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+        .card-data-value.fee { color: var(--accent-amber); }
+        .card-data-value.receive { color: var(--accent-green); }
+
+        .swap-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .swap-btn-primary {
+            background: var(--gradient-green);
+            color: #fff;
+        }
+
+        .swap-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(16,185,129,0.35);
+            color: #fff;
+        }
+
+        .swap-btn-secondary {
+            background: rgba(59,130,246,0.12);
+            color: var(--accent-blue);
+            border: 1px solid rgba(59,130,246,0.25);
+        }
+
+        .swap-btn-secondary:hover {
+            background: rgba(59,130,246,0.2);
+            transform: translateY(-1px);
+            color: var(--accent-blue);
+        }
+
+        .best-badge {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+        }
+
+        /* ===== Table Header (Desktop) ===== */
+        .table-header {
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr 1fr auto;
+            gap: 16px;
+            padding: 0 24px 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+        }
+
+        .table-header > div:not(:first-child) { text-align: center; }
+        .table-header > div:last-child { text-align: right; min-width: 140px; }
+
+        /* ===== Loading Skeleton ===== */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: var(--radius-sm);
+        }
+
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* ===== How It Works ===== */
+        .how-section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 36px 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s;
+        }
+
+        .step:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: var(--gradient-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin: 0 auto 20px;
+        }
+
+        .step-num {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .step h3 {
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        /* ===== Why Compare Section ===== */
+        .why-section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .why-card {
+            padding: 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+        }
+
+        .why-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .why-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* ===== Exchange Reviews ===== */
+        .reviews-section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .review-card {
+            padding: 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s;
+        }
+
+        .review-card:hover {
+            border-color: rgba(59,130,246,0.3);
+            box-shadow: var(--shadow-md);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .review-card h3 { font-size: 1.1rem; }
+
+        .review-card .review-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .review-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ===== FAQ Section ===== */
+        .faq-section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-list {
+            max-width: 780px;
+            margin: 48px auto 0;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            width: 100%;
+            text-align: left;
+            font-family: var(--font-sans);
+        }
+
+        .faq-question:hover { color: var(--accent-blue); }
+
+        .faq-chevron {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: transform 0.25s;
+        }
+
+        .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+        }
+
+        .faq-item.open .faq-answer { max-height: 300px; }
+
+        .faq-answer-inner {
+            padding-bottom: 20px;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand .logo { margin-bottom: 14px; }
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            max-width: 300px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 10px; }
+        .footer-col a { color: var(--text-muted); font-size: 0.88rem; }
+        .footer-col a:hover { color: var(--text-primary); }
+
+        .footer-bottom {
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .footer-disclaimer {
+            background: rgba(245,158,11,0.06);
+            border: 1px solid rgba(245,158,11,0.15);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            margin-bottom: 32px;
+        }
+
+        .footer-disclaimer p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        .footer-disclaimer strong { color: var(--accent-amber); }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .exchange-card {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 20px;
+            }
+
+            .exchange-info { justify-content: flex-start; }
+
+            .card-data-col { text-align: left; }
+
+            .card-data-row {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+                width: 100%;
+            }
+
+            .swap-btn { width: 100%; justify-content: center; }
+            .table-header { display: none; }
+            .best-badge { top: 10px; right: 12px; }
+
+            .footer-top { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .header-nav { display: none; }
+            .mobile-menu-btn { display: block; }
+
+            .header-nav.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: var(--bg-secondary);
+                border-bottom: 1px solid var(--border);
+                padding: 20px 24px;
+                gap: 16px;
+            }
+
+            .hero { padding: 48px 0 40px; }
+            .hero-stats { gap: 24px; }
+
+            .steps { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            .review-grid { grid-template-columns: 1fr; }
+
+            .swap-controls { flex-direction: column; }
+            .amount-input-wrap { width: 100%; }
+
+            .pair-selector { gap: 6px; }
+            .pair-btn { padding: 8px 12px; font-size: 0.78rem; }
+
+            .footer-top { grid-template-columns: 1fr; gap: 28px; }
+
+            .comparison-header { flex-direction: column; gap: 8px; align-items: flex-start; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 16px; }
+            .card-data-row { grid-template-columns: 1fr; gap: 8px; }
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .fade-in-up:nth-child(1) { animation-delay: 0.05s; }
+        .fade-in-up:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in-up:nth-child(3) { animation-delay: 0.15s; }
+        .fade-in-up:nth-child(4) { animation-delay: 0.2s; }
+
+        /* ===== Pulse Dot (live indicator) ===== */
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+        }
+
+        /* ===== Savings Banner ===== */
+        .savings-banner {
+            background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(59,130,246,0.08) 100%);
+            border: 1px solid rgba(16,185,129,0.2);
+            border-radius: var(--radius-md);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+        }
+
+        .savings-banner strong { color: var(--accent-green); }
+
+        /* ===== No Results ===== */
+        .no-results {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+        }
+
+        .no-results-icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .no-results p { font-size: 1rem; }
+    </style>
+
+    <!-- Google Fonts (subset for performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container header-inner">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                        <polyline points="16 7 22 7 22 13"></polyline>
+                    </svg>
+                </div>
+                SwapRadar
+            </div>
+            <nav class="header-nav" id="mainNav">
+                <a href="#compare">Compare Rates</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#exchanges">Exchanges</a>
+                <a href="#faq">FAQ</a>
+                <a href="#compare" class="header-cta">Find Best Rate</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="container">
+            <h1>Find the <span class="highlight">Best Crypto Swap Rate</span> in Seconds</h1>
+            <p class="hero-sub">
+                Compare rates across top no-KYC exchanges instantly. Stop overpaying on swaps &mdash;
+                save up to 2% on every trade with real-time rate comparison.
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">4</div>
+                    <div class="hero-stat-label">Exchanges Compared</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">8+</div>
+                    <div class="hero-stat-label">Trading Pairs</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">~2%</div>
+                    <div class="hero-stat-label">Average Savings</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">0</div>
+                    <div class="hero-stat-label">KYC Required</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SWAP COMPARISON ===== -->
+    <section class="swap-section" id="compare">
+        <div class="container">
+            <!-- Search -->
+            <div class="search-wrap">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search pairs (e.g. BTC, ETH, XMR...)">
+            </div>
+
+            <!-- Pair Buttons & Amount -->
+            <div class="swap-controls">
+                <div class="pair-selector" id="pairSelector"></div>
+                <div class="amount-input-wrap">
+                    <span class="amount-input-icon" id="amountCurrLabel">1</span>
+                    <input type="number" class="amount-input" id="amountInput" value="1" min="0.0001" step="any" placeholder="Amount">
+                </div>
+            </div>
+
+            <!-- Savings Banner -->
+            <div class="savings-banner" id="savingsBanner" style="display:none;">
+                <span class="pulse-dot"></span>
+                <span id="savingsText"></span>
+            </div>
+
+            <!-- Comparison Area -->
+            <div class="comparison-header">
+                <div>
+                    <h2>Swap Rates for <span class="pair-display" id="pairDisplay">BTC &rarr; ETH</span></h2>
+                    <span class="last-updated"><span class="pulse-dot" style="width:6px;height:6px;margin-right:4px;vertical-align:middle;"></span> Updated <span id="lastUpdated">just now</span></span>
+                </div>
+            </div>
+
+            <!-- Table Header (Desktop) -->
+            <div class="table-header">
+                <div>Exchange</div>
+                <div>Rate</div>
+                <div>Fee</div>
+                <div>You Receive</div>
+                <div></div>
+            </div>
+
+            <!-- Cards Container -->
+            <div class="exchange-cards" id="exchangeCards">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="how-section" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How SwapRadar Works</h2>
+                <p>Three simple steps to find the best rate for your crypto swap.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+                    <div class="step-num">Step 1</div>
+                    <h3>Choose Your Pair</h3>
+                    <p>Select the crypto pair you want to swap. We support all major coins including BTC, ETH, USDT, XMR, SOL, and LTC.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    </div>
+                    <div class="step-num">Step 2</div>
+                    <h3>Compare Rates</h3>
+                    <p>We fetch rates from ChangeNOW, SimpleSwap, Changelly, and Exolix so you can see exactly how much you'll receive on each exchange.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                    </div>
+                    <div class="step-num">Step 3</div>
+                    <h3>Swap Instantly</h3>
+                    <p>Click through to the exchange with the best rate. No account required, no KYC. Just swap and receive your crypto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WHY COMPARE ===== -->
+    <section class="why-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Compare Crypto Swap Rates?</h2>
+                <p>Small differences in rates add up fast. Here's why comparing matters.</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        Save Up to 2% Per Swap
+                    </h3>
+                    <p>Rates between exchanges can vary by 1-2% or more on a single swap. On a $10,000 trade, that's $100-200 in savings you'd miss by not comparing. SwapRadar shows you the best rate instantly so you always keep more of your crypto.</p>
+                </div>
+                <div class="why-card">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        No KYC, Full Privacy
+                    </h3>
+                    <p>All exchanges on SwapRadar operate without mandatory identity verification. Your financial privacy is preserved. No sign-ups, no document uploads, no waiting periods. Just fast, private crypto swaps.</p>
+                </div>
+                <div class="why-card">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Real-Time Rate Data
+                    </h3>
+                    <p>Crypto markets move fast. A rate that looks good can change within minutes. SwapRadar pulls fresh rates so you can compare based on current market conditions, not stale data.</p>
+                </div>
+                <div class="why-card">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Trusted Exchanges Only
+                    </h3>
+                    <p>We only list established, reputable exchanges with proven track records. Each exchange has processed millions of swaps and maintains strong user trust. No shady operators, only services we'd use ourselves.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EXCHANGE REVIEWS ===== -->
+    <section class="reviews-section" id="exchanges">
+        <div class="container">
+            <div class="section-title">
+                <h2>No-KYC Exchanges Compared</h2>
+                <p>A quick breakdown of each exchange we track, so you know who you're swapping with.</p>
+            </div>
+            <div class="review-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="exchange-logo changenow">CN</div>
+                        <div>
+                            <h3>ChangeNOW</h3>
+                            <div class="exchange-trust">
+                                <span class="exchange-trust-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                                <span class="exchange-trust-count">Excellent</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-tags">
+                        <span class="badge badge-green">No KYC</span>
+                        <span class="badge badge-blue">400+ Coins</span>
+                        <span class="badge badge-amber">Since 2017</span>
+                    </div>
+                    <p>ChangeNOW is one of the most popular instant swap services, offering 400+ cryptocurrencies with no registration required. Known for competitive rates and fast processing times. Supports fixed and floating rate swaps, making it ideal for both small and large trades.</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="exchange-logo simpleswap">SS</div>
+                        <div>
+                            <h3>SimpleSwap</h3>
+                            <div class="exchange-trust">
+                                <span class="exchange-trust-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                                <span class="exchange-trust-count">Very Good</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-tags">
+                        <span class="badge badge-green">No KYC</span>
+                        <span class="badge badge-blue">600+ Coins</span>
+                        <span class="badge badge-amber">Since 2018</span>
+                    </div>
+                    <p>SimpleSwap lives up to its name with a clean, user-friendly interface. Supports over 600 cryptocurrencies and offers both fixed and floating rates. Low minimum swap amounts make it accessible for smaller trades, and it frequently offers competitive rates on popular pairs.</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="exchange-logo changelly">CH</div>
+                        <div>
+                            <h3>Changelly</h3>
+                            <div class="exchange-trust">
+                                <span class="exchange-trust-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                                <span class="exchange-trust-count">Very Good</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-tags">
+                        <span class="badge badge-green">No KYC</span>
+                        <span class="badge badge-blue">500+ Coins</span>
+                        <span class="badge badge-amber">Since 2015</span>
+                    </div>
+                    <p>Changelly is one of the oldest instant swap services, operating since 2015. It has built a strong reputation for reliability and offers a wide range of crypto pairs. Slightly higher fees on some pairs, but often compensates with better base rates, especially on large swaps.</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="exchange-logo exolix">EX</div>
+                        <div>
+                            <h3>Exolix</h3>
+                            <div class="exchange-trust">
+                                <span class="exchange-trust-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                                <span class="exchange-trust-count">Very Good</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-tags">
+                        <span class="badge badge-green">No KYC</span>
+                        <span class="badge badge-blue">300+ Coins</span>
+                        <span class="badge badge-amber">Since 2019</span>
+                    </div>
+                    <p>Exolix is a newer but rapidly growing exchange offering unlimited swaps with no registration. Strong focus on privacy and supports both fixed and floating rates. Often features competitive rates on popular pairs and has a growing reputation for fast, reliable service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about comparing crypto swap rates.</p>
+            </div>
+            <div class="faq-list" id="faqList">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What is a crypto swap and how does it work?
+                        <span class="faq-chevron">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">A crypto swap is a direct exchange of one cryptocurrency for another without going through traditional buy/sell order books. You send one coin (e.g., BTC) to the swap service, and they send you the equivalent value in another coin (e.g., ETH). The entire process typically takes 5-30 minutes and requires no account creation on most no-KYC services.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Why do rates differ between exchanges?
+                        <span class="faq-chevron">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">Each exchange sources liquidity from different providers and market makers, applies different fee structures, and may have varying spreads. Network conditions, trading volume, and the exchange's own reserves all affect the final rate you see. This is exactly why comparing rates before swapping is so valuable.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Are these exchanges safe to use?
+                        <span class="faq-chevron">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">All exchanges listed on SwapRadar are established services with years of operation and millions of completed swaps. However, as with all crypto services, do your own research. Since these are non-custodial swap services, your funds are only at risk during the brief swap window. Always double-check receiving addresses and start with smaller amounts if trying a new service.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What does "no KYC" mean?
+                        <span class="faq-chevron">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">KYC stands for "Know Your Customer" - a process where services require you to verify your identity with government-issued ID. No-KYC exchanges allow you to swap crypto without providing personal identification. This means faster swaps, better privacy, and no waiting for document verification. Note that some services may still apply KYC for unusually large transactions as required by regulations.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How accurate are the rates shown?
+                        <span class="faq-chevron">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">Rates are fetched in real time from each exchange's API. However, the final rate you receive may vary slightly due to market movement between when you see the rate and when your transaction is processed. For fixed-rate swaps, the rate is locked in at the time of the swap. For floating-rate swaps, the final amount may differ by a small margin.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Does SwapRadar charge any fees?
+                        <span class="faq-chevron">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">SwapRadar is completely free to use. We earn a small referral commission from exchanges when you complete a swap through our links. This does not affect the rate you receive &mdash; the rates shown are the same rates you'd see going directly to the exchange. Our incentive is aligned with yours: we want to send you to the exchange with the best rate.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-disclaimer">
+                <p><strong>Disclaimer:</strong> SwapRadar is a rate comparison tool and does not process any cryptocurrency transactions directly. We provide links to third-party exchange services. Rates shown are indicative and may change. Cryptocurrency trading involves risk. Always verify rates on the exchange before completing a swap. SwapRadar may earn referral commissions from partner exchanges at no additional cost to you.</p>
+            </div>
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                <polyline points="16 7 22 7 22 13"></polyline>
+                            </svg>
+                        </div>
+                        SwapRadar
+                    </div>
+                    <p>The fastest way to find the best crypto swap rate. Compare top no-KYC exchanges and save on every trade.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Exchanges</h4>
+                    <ul>
+                        <li><a href="https://changenow.io/?ref=YOUR_REF" target="_blank" rel="noopener noreferrer nofollow">ChangeNOW</a></li>
+                        <li><a href="https://simpleswap.io/?ref=YOUR_REF" target="_blank" rel="noopener noreferrer nofollow">SimpleSwap</a></li>
+                        <li><a href="https://changelly.com/?ref_id=YOUR_REF" target="_blank" rel="noopener noreferrer nofollow">Changelly</a></li>
+                        <li><a href="https://exolix.com/" target="_blank" rel="noopener noreferrer nofollow">Exolix</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Popular Pairs</h4>
+                    <ul>
+                        <li><a href="#compare" data-pair="BTC_ETH">BTC to ETH</a></li>
+                        <li><a href="#compare" data-pair="BTC_USDT">BTC to USDT</a></li>
+                        <li><a href="#compare" data-pair="ETH_USDT">ETH to USDT</a></li>
+                        <li><a href="#compare" data-pair="BTC_XMR">BTC to XMR</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#exchanges">Exchange Reviews</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SwapRadar. All rights reserved. Crypto comparison tool for informational purposes only.</p>
+                <p>Built for the crypto community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ===== EXCHANGE DATA =====
+        const EXCHANGES = {
+            changenow: {
+                name: 'ChangeNOW',
+                logo: 'CN',
+                class: 'changenow',
+                stars: 5,
+                reviews: '10K+ swaps',
+                urlPattern: (from, to, amount) =>
+                    `https://changenow.io/?from=${from}&to=${to}&amount=${amount}&ref=YOUR_REF`
+            },
+            simpleswap: {
+                name: 'SimpleSwap',
+                logo: 'SS',
+                class: 'simpleswap',
+                stars: 4,
+                reviews: '8K+ swaps',
+                urlPattern: (from, to, amount) =>
+                    `https://simpleswap.io/?from=${from}&to=${to}&amount=${amount}&ref=YOUR_REF`
+            },
+            changelly: {
+                name: 'Changelly',
+                logo: 'CH',
+                class: 'changelly',
+                stars: 4,
+                reviews: '12K+ swaps',
+                urlPattern: (from, to, amount) =>
+                    `https://changelly.com/exchange/${from}/${to}?ref_id=YOUR_REF`
+            },
+            exolix: {
+                name: 'Exolix',
+                logo: 'EX',
+                class: 'exolix',
+                stars: 4,
+                reviews: '5K+ swaps',
+                urlPattern: (from, to, amount) =>
+                    `https://exolix.com/exchange/${from}-${to}`
+            }
+        };
+
+        // ===== MOCK RATE DATA =====
+        const MOCK_RATES = {
+            'BTC_ETH': {
+                from: 'BTC', to: 'ETH', fromName: 'Bitcoin', toName: 'Ethereum',
+                changenow:  { rate: 14.8200, fee: 0.50, estimatedReceive: 14.7459 },
+                simpleswap: { rate: 14.7900, fee: 0.40, estimatedReceive: 14.7308 },
+                changelly:  { rate: 14.8500, fee: 0.60, estimatedReceive: 14.7609 },
+                exolix:     { rate: 14.8000, fee: 0.45, estimatedReceive: 14.7334 }
+            },
+            'ETH_BTC': {
+                from: 'ETH', to: 'BTC', fromName: 'Ethereum', toName: 'Bitcoin',
+                changenow:  { rate: 0.06732, fee: 0.50, estimatedReceive: 0.06698 },
+                simpleswap: { rate: 0.06740, fee: 0.40, estimatedReceive: 0.06713 },
+                changelly:  { rate: 0.06728, fee: 0.55, estimatedReceive: 0.06691 },
+                exolix:     { rate: 0.06735, fee: 0.42, estimatedReceive: 0.06707 }
+            },
+            'BTC_USDT': {
+                from: 'BTC', to: 'USDT', fromName: 'Bitcoin', toName: 'Tether',
+                changenow:  { rate: 67420.00, fee: 0.50, estimatedReceive: 67082.90 },
+                simpleswap: { rate: 67380.00, fee: 0.40, estimatedReceive: 67110.48 },
+                changelly:  { rate: 67450.00, fee: 0.55, estimatedReceive: 67079.03 },
+                exolix:     { rate: 67400.00, fee: 0.48, estimatedReceive: 67076.48 }
+            },
+            'ETH_USDT': {
+                from: 'ETH', to: 'USDT', fromName: 'Ethereum', toName: 'Tether',
+                changenow:  { rate: 4548.00, fee: 0.50, estimatedReceive: 4525.26 },
+                simpleswap: { rate: 4542.00, fee: 0.40, estimatedReceive: 4523.83 },
+                changelly:  { rate: 4552.00, fee: 0.60, estimatedReceive: 4524.69 },
+                exolix:     { rate: 4545.00, fee: 0.45, estimatedReceive: 4524.55 }
+            },
+            'BTC_XMR': {
+                from: 'BTC', to: 'XMR', fromName: 'Bitcoin', toName: 'Monero',
+                changenow:  { rate: 410.50, fee: 0.50, estimatedReceive: 408.45 },
+                simpleswap: { rate: 409.80, fee: 0.45, estimatedReceive: 407.96 },
+                changelly:  { rate: 411.20, fee: 0.65, estimatedReceive: 408.53 },
+                exolix:     { rate: 410.00, fee: 0.40, estimatedReceive: 408.36 }
+            },
+            'SOL_USDT': {
+                from: 'SOL', to: 'USDT', fromName: 'Solana', toName: 'Tether',
+                changenow:  { rate: 185.20, fee: 0.50, estimatedReceive: 184.27 },
+                simpleswap: { rate: 184.90, fee: 0.40, estimatedReceive: 184.16 },
+                changelly:  { rate: 185.40, fee: 0.55, estimatedReceive: 184.38 },
+                exolix:     { rate: 185.00, fee: 0.48, estimatedReceive: 184.11 }
+            },
+            'BTC_LTC': {
+                from: 'BTC', to: 'LTC', fromName: 'Bitcoin', toName: 'Litecoin',
+                changenow:  { rate: 838.00, fee: 0.50, estimatedReceive: 833.81 },
+                simpleswap: { rate: 836.50, fee: 0.40, estimatedReceive: 833.15 },
+                changelly:  { rate: 839.00, fee: 0.60, estimatedReceive: 833.97 },
+                exolix:     { rate: 837.20, fee: 0.45, estimatedReceive: 833.43 }
+            },
+            'USDT_BTC': {
+                from: 'USDT', to: 'BTC', fromName: 'Tether', toName: 'Bitcoin',
+                changenow:  { rate: 0.00001482, fee: 0.50, estimatedReceive: 0.00001475 },
+                simpleswap: { rate: 0.00001484, fee: 0.40, estimatedReceive: 0.00001478 },
+                changelly:  { rate: 0.00001480, fee: 0.55, estimatedReceive: 0.00001472 },
+                exolix:     { rate: 0.00001483, fee: 0.42, estimatedReceive: 0.00001477 }
+            }
+        };
+
+        // ===== STATE =====
+        let currentPair = 'BTC_ETH';
+        let currentAmount = 1;
+
+        // ===== DOM ELEMENTS =====
+        const pairSelector = document.getElementById('pairSelector');
+        const amountInput = document.getElementById('amountInput');
+        const amountCurrLabel = document.getElementById('amountCurrLabel');
+        const exchangeCards = document.getElementById('exchangeCards');
+        const pairDisplay = document.getElementById('pairDisplay');
+        const lastUpdated = document.getElementById('lastUpdated');
+        const savingsBanner = document.getElementById('savingsBanner');
+        const savingsText = document.getElementById('savingsText');
+        const searchInput = document.getElementById('searchInput');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+
+        // ===== INIT PAIR BUTTONS =====
+        function initPairButtons() {
+            const pairs = Object.keys(MOCK_RATES);
+            pairs.forEach(pair => {
+                const data = MOCK_RATES[pair];
+                const btn = document.createElement('button');
+                btn.className = 'pair-btn' + (pair === currentPair ? ' active' : '');
+                btn.dataset.pair = pair;
+                btn.textContent = `${data.from} \u2192 ${data.to}`;
+                btn.addEventListener('click', () => selectPair(pair));
+                pairSelector.appendChild(btn);
+            });
+        }
+
+        // ===== SELECT PAIR =====
+        function selectPair(pair) {
+            currentPair = pair;
+
+            // Update active button
+            document.querySelectorAll('.pair-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.pair === pair);
+            });
+
+            // Update display
+            const data = MOCK_RATES[pair];
+            pairDisplay.innerHTML = `${data.from} &rarr; ${data.to}`;
+            amountCurrLabel.textContent = data.from;
+
+            renderCards();
+        }
+
+        // ===== RENDER EXCHANGE CARDS =====
+        function renderCards() {
+            const pairData = MOCK_RATES[currentPair];
+            if (!pairData) {
+                exchangeCards.innerHTML = '<div class="no-results"><div class="no-results-icon">&#128269;</div><p>No rates found for this pair. Try selecting a different pair above.</p></div>';
+                savingsBanner.style.display = 'none';
+                return;
+            }
+
+            const amount = parseFloat(amountInput.value) || 1;
+            const exchangeKeys = ['changenow', 'simpleswap', 'changelly', 'exolix'];
+
+            // Calculate rates with amount
+            const results = exchangeKeys.map(key => {
+                const exData = pairData[key];
+                const receive = exData.estimatedReceive * amount;
+                return {
+                    key,
+                    exchange: EXCHANGES[key],
+                    rate: exData.rate,
+                    fee: exData.fee,
+                    receive: receive,
+                    receivePerUnit: exData.estimatedReceive
+                };
+            });
+
+            // Sort by receive amount (best first)
+            results.sort((a, b) => b.receive - a.receive);
+
+            const bestReceive = results[0].receive;
+            const worstReceive = results[results.length - 1].receive;
+
+            // Show savings banner
+            if (bestReceive > worstReceive && worstReceive > 0) {
+                const savingsPercent = ((bestReceive - worstReceive) / worstReceive * 100).toFixed(2);
+                const savingsAbs = (bestReceive - worstReceive);
+                const toSymbol = pairData.to;
+
+                let savingsFormatted;
+                if (savingsAbs < 0.0001) {
+                    savingsFormatted = savingsAbs.toExponential(2);
+                } else if (savingsAbs < 1) {
+                    savingsFormatted = savingsAbs.toFixed(6);
+                } else if (savingsAbs < 100) {
+                    savingsFormatted = savingsAbs.toFixed(4);
+                } else {
+                    savingsFormatted = savingsAbs.toFixed(2);
+                }
+
+                savingsText.innerHTML = `Choosing the best rate saves you <strong>${savingsFormatted} ${toSymbol}</strong> (${savingsPercent}%) compared to the worst rate on this pair.`;
+                savingsBanner.style.display = 'flex';
+            } else {
+                savingsBanner.style.display = 'none';
+            }
+
+            // Render cards
+            let html = '';
+            results.forEach((r, idx) => {
+                const isBest = idx === 0;
+                const ex = r.exchange;
+                const fromSymbol = pairData.from.toLowerCase();
+                const toSymbol = pairData.to.toLowerCase();
+                const swapUrl = ex.urlPattern(fromSymbol, toSymbol, amount);
+
+                // Format receive
+                let receiveFormatted;
+                if (r.receive < 0.0001) {
+                    receiveFormatted = r.receive.toFixed(8);
+                } else if (r.receive < 1) {
+                    receiveFormatted = r.receive.toFixed(6);
+                } else if (r.receive < 1000) {
+                    receiveFormatted = r.receive.toFixed(4);
+                } else {
+                    receiveFormatted = r.receive.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
+
+                // Format rate
+                let rateFormatted;
+                if (r.rate < 0.0001) {
+                    rateFormatted = r.rate.toFixed(8);
+                } else if (r.rate < 1) {
+                    rateFormatted = r.rate.toFixed(6);
+                } else if (r.rate < 1000) {
+                    rateFormatted = r.rate.toFixed(2);
+                } else {
+                    rateFormatted = r.rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
+
+                const stars = '\u2605'.repeat(ex.stars) + '\u2606'.repeat(5 - ex.stars);
+
+                html += `
+                <div class="exchange-card fade-in-up ${isBest ? 'best-rate' : ''}">
+                    ${isBest ? '<span class="badge badge-green best-badge">&#10003; Best Rate</span>' : ''}
+                    <div class="exchange-info">
+                        <div class="exchange-logo ${ex.class}">${ex.logo}</div>
+                        <div class="exchange-name-wrap">
+                            <div class="exchange-name">${ex.name}</div>
+                            <div class="exchange-trust">
+                                <span class="exchange-trust-stars">${stars}</span>
+                                <span class="exchange-trust-count">${ex.reviews}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-data-col">
+                        <div class="card-data-label">Rate</div>
+                        <div class="card-data-value">1 ${pairData.from} = ${rateFormatted} ${pairData.to}</div>
+                    </div>
+                    <div class="card-data-col">
+                        <div class="card-data-label">Fee</div>
+                        <div class="card-data-value fee">${r.fee}%</div>
+                    </div>
+                    <div class="card-data-col">
+                        <div class="card-data-label">You Receive</div>
+                        <div class="card-data-value receive">${receiveFormatted} ${pairData.to}</div>
+                    </div>
+                    <a href="${swapUrl}" target="_blank" rel="noopener noreferrer nofollow" class="swap-btn ${isBest ? 'swap-btn-primary' : 'swap-btn-secondary'}">
+                        Swap Now
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>`;
+            });
+
+            exchangeCards.innerHTML = html;
+            lastUpdated.textContent = 'just now';
+
+            // Retrigger animations
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.exchange-card').forEach(card => {
+                    card.style.animation = 'none';
+                    card.offsetHeight; // Force reflow
+                    card.style.animation = '';
+                });
+            });
+        }
+
+        // ===== SEARCH FILTER =====
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim().toUpperCase();
+            const buttons = document.querySelectorAll('.pair-btn');
+
+            if (!query) {
+                buttons.forEach(btn => btn.style.display = '');
+                return;
+            }
+
+            let visibleCount = 0;
+            buttons.forEach(btn => {
+                const pair = btn.dataset.pair;
+                const pairData = MOCK_RATES[pair];
+                const searchStr = `${pair} ${pairData.from} ${pairData.to} ${pairData.fromName} ${pairData.toName}`.toUpperCase();
+                const isMatch = searchStr.includes(query);
+                btn.style.display = isMatch ? '' : 'none';
+                if (isMatch) visibleCount++;
+            });
+
+            // If current pair is hidden, auto-select first visible
+            const currentBtn = document.querySelector(`.pair-btn[data-pair="${currentPair}"]`);
+            if (currentBtn && currentBtn.style.display === 'none') {
+                const firstVisible = document.querySelector('.pair-btn:not([style*="display: none"])');
+                if (firstVisible) {
+                    selectPair(firstVisible.dataset.pair);
+                }
+            }
+        });
+
+        // ===== AMOUNT INPUT =====
+        amountInput.addEventListener('input', function() {
+            currentAmount = parseFloat(this.value) || 1;
+            renderCards();
+        });
+
+        // ===== MOBILE MENU =====
+        mobileMenuBtn.addEventListener('click', function() {
+            mainNav.classList.toggle('open');
+        });
+
+        // Close mobile menu on link click
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mainNav.classList.remove('open'));
+        });
+
+        // ===== FAQ ACCORDION =====
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const item = this.parentElement;
+                const wasOpen = item.classList.contains('open');
+
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+
+                // Toggle current
+                if (!wasOpen) item.classList.add('open');
+            });
+        });
+
+        // ===== FOOTER PAIR LINKS =====
+        document.querySelectorAll('[data-pair]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const pair = this.dataset.pair;
+                if (MOCK_RATES[pair]) {
+                    e.preventDefault();
+                    selectPair(pair);
+                    document.getElementById('compare').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ===== SIMULATE RATE REFRESH =====
+        // Add slight random fluctuation to rates periodically to simulate live data
+        function simulateRateUpdate() {
+            const pairData = MOCK_RATES[currentPair];
+            if (!pairData) return;
+
+            ['changenow', 'simpleswap', 'changelly', 'exolix'].forEach(key => {
+                const data = pairData[key];
+                // Tiny random fluctuation: +/- 0.1%
+                const fluctuation = 1 + (Math.random() - 0.5) * 0.002;
+                data.rate = parseFloat((data.rate * fluctuation).toPrecision(6));
+                data.estimatedReceive = data.rate * (1 - data.fee / 100);
+            });
+
+            renderCards();
+            lastUpdated.textContent = 'just now';
+        }
+
+        // Refresh rates every 30 seconds
+        setInterval(simulateRateUpdate, 30000);
+
+        // ===== INIT =====
+        initPairButtons();
+        renderCards();
+
+    })();
+    </script>
+</body>
+</html>
