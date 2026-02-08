@@ -218,8 +218,37 @@
             font-size: clamp(1rem, 2vw, 1.2rem);
             color: var(--text-secondary);
             max-width: 640px;
-            margin: 0 auto 36px;
+            margin: 0 auto 28px;
             line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .hero-actions a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .hero-cta-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .hero-cta-secondary:hover {
+            border-color: var(--border-highlight);
+            color: #fff;
         }
 
         .hero-stats {
@@ -982,6 +1011,10 @@
                 Compare rates across top no-KYC exchanges instantly. Stop overpaying on swaps &mdash;
                 save up to 2% on every trade with real-time rate comparison.
             </p>
+            <div class="hero-actions">
+                <a href="#compare" class="header-cta">Compare rates now</a>
+                <a href="https://github.com/wagecage/swapradar" class="hero-cta-secondary" target="_blank" rel="noopener">Star on GitHub</a>
+            </div>
             <div class="hero-stats">
                 <div class="hero-stat">
                     <div class="hero-stat-value">4</div>
